@@ -2,7 +2,7 @@
 
 namespace FondOfSpryker\Zed\Url\Business;
 
-use Pyz\Zed\Url\Business\Redirect\Observer\UrlUpdateObserver;
+use FondOfSpryker\Zed\Url\Business\Redirect\Observer\UrlUpdateObserver;
 use Spryker\Zed\Url\Business\UrlBusinessFactory as SprykerUrlBusinessFactory;
 
 class UrlBusinessFactory extends SprykerUrlBusinessFactory
