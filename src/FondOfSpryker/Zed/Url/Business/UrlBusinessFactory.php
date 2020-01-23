@@ -30,6 +30,7 @@ class UrlBusinessFactory extends SprykerUrlBusinessFactory
     {
         return new UrlReader(
             $this->getQueryContainer(),
+            $this->getRepository(),
             $this->getStoreFacade()
         );
     }

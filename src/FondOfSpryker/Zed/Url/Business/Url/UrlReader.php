@@ -9,6 +9,7 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use Spryker\Zed\Url\Business\Url\UrlReader as SprykerUrlReader;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
+use Spryker\Zed\Url\Persistence\UrlRepositoryInterface;
 
 class UrlReader extends SprykerUrlReader implements UrlReaderInterface
 {
@@ -23,12 +24,14 @@ class UrlReader extends SprykerUrlReader implements UrlReaderInterface
     protected $storeFacade;
 
     /**
-     * @param \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Store\Business\StoreFacadeInterface $storeFacade
+     * UrlReader constructor.
+     * @param  \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface  $queryContainer
+     * @param  \Spryker\Zed\Url\Persistence\UrlRepositoryInterface  $urlRepository
+     * @param  \Spryker\Zed\Store\Business\StoreFacadeInterface  $storeFacade
      */
-    public function __construct(UrlQueryContainerInterface $queryContainer, StoreFacadeInterface $storeFacade)
+    public function __construct(UrlQueryContainerInterface $queryContainer, UrlRepositoryInterface $urlRepository, StoreFacadeInterface $storeFacade)
     {
-        parent::__construct($queryContainer);
+        parent::__construct($queryContainer, $urlRepository);
         $this->storeFacade = $storeFacade;
     }
 
