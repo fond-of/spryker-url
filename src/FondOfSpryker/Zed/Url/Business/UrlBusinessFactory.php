@@ -36,8 +36,6 @@ class UrlBusinessFactory extends SprykerUrlBusinessFactory
     }
 
     /**
-     * @throws
-     *
      * @return \Spryker\Zed\Store\Business\StoreFacadeInterface
      */
     protected function getStoreFacade(): StoreFacadeInterface
