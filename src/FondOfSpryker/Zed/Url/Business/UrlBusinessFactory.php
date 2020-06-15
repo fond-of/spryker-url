@@ -3,6 +3,7 @@
 namespace FondOfSpryker\Zed\Url\Business;
 
 use FondOfSpryker\Zed\Url\Business\Redirect\Observer\UrlUpdateObserver;
+use FondOfSpryker\Zed\Url\Business\Url\UrlCreator;
 use FondOfSpryker\Zed\Url\Business\Url\UrlReader;
 use FondOfSpryker\Zed\Url\Business\Url\UrlReaderInterface;
 use FondOfSpryker\Zed\Url\UrlDependencyProvider;
@@ -33,6 +34,18 @@ class UrlBusinessFactory extends SprykerUrlBusinessFactory
             $this->getRepository(),
             $this->getStoreFacade()
         );
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\Url\Business\Url\UrlCreatorInterface
+     */
+    public function createUrlCreator()
+    {
+        $urlCreator = new UrlCreator($this->getQueryContainer(), $this->createUrlReader(), $this->createUrlActivator());
+
+        $this->attachUrlCreatorObservers($urlCreator);
+
+        return $urlCreator;
     }
 
     /**
