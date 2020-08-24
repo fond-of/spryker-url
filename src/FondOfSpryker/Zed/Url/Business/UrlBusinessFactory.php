@@ -5,6 +5,7 @@ namespace FondOfSpryker\Zed\Url\Business;
 use FondOfSpryker\Zed\Url\Business\Redirect\Observer\UrlUpdateObserver;
 use FondOfSpryker\Zed\Url\Business\Url\UrlCreator;
 use FondOfSpryker\Zed\Url\Business\Url\UrlReader;
+use FondOfSpryker\Zed\Url\Business\Url\UrlUpdater;
 use FondOfSpryker\Zed\Url\Business\Url\UrlReaderInterface;
 use FondOfSpryker\Zed\Url\UrlDependencyProvider;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
@@ -16,6 +17,18 @@ use Spryker\Zed\Url\Business\UrlBusinessFactory as SprykerUrlBusinessFactory;
  */
 class UrlBusinessFactory extends SprykerUrlBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\Url\Business\Url\UrlUpdaterInterface
+     */
+    public function createUrlUpdater()
+    {
+        $urlUpdater = new UrlUpdater($this->getQueryContainer(), $this->createUrlReader(), $this->createUrlActivator());
+
+        $this->attachUrlUpdaterObservers($urlUpdater);
+
+        return $urlUpdater;
+    }
+
     /**
      * @return \Spryker\Zed\Url\Business\Url\UrlUpdaterAfterSaveObserverInterface
      */
