@@ -5,9 +5,7 @@ namespace FondOfSpryker\Zed\Url\Business\Url;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Url\Persistence\SpyUrl;
 use Spryker\Zed\Url\Business\Exception\MissingUrlException;
-use Spryker\Zed\Url\Business\Url\AbstractUrlUpdaterSubject;
 use Spryker\Zed\Url\Business\Url\UrlUpdater as SprykerUrlUpdater;
-use Spryker\Zed\Url\Business\Url\UrlUpdaterInterface;
 
 class UrlUpdater extends SprykerUrlUpdater
 {
