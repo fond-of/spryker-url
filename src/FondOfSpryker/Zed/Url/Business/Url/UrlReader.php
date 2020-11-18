@@ -35,7 +35,7 @@ class UrlReader extends SprykerUrlReader implements UrlReaderInterface
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      * @param bool $ignoreUrlRedirects
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuerys
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     protected function queryUrlEntity(UrlTransfer $urlTransfer, $ignoreUrlRedirects = false)
     {
