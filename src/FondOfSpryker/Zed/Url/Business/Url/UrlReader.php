@@ -39,8 +39,11 @@ class UrlReader extends SprykerUrlReader implements UrlReaderInterface
      */
     protected function queryUrlEntity(UrlTransfer $urlTransfer, $ignoreUrlRedirects = false)
     {
-        $fkStore = $this->storeFacade->getCurrentStore()->getIdStore();
+        $fkStore = $urlTransfer->getFkStore();
+        if ($fkStore === null) {
+            $fkStore = $this->storeFacade->getCurrentStore()->getIdStore();
+        }
 
-        return parent::queryUrlEntity($urlTransfer, $ignoreUrlRedirects)->filterByFkStore($fkStore);
+        return parent::queryUrlEntity($urlTransfer, $ignoreUrlRedirects)->filterByFkStore($fkStore)->filterByUrl($urlTransfer->getUrl());
     }
 }

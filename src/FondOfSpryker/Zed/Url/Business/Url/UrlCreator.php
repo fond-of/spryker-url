@@ -15,7 +15,12 @@ class UrlCreator extends SprykerUrlCreator implements UrlCreatorInterface
     protected function persistUrlEntity(UrlTransfer $urlTransfer)
     {
         $urlTransfer->requireUrl();
-        $urlEntity = $this->urlQueryContainer->queryUrl($urlTransfer->getUrl())->findOneOrCreate();
+        $urlTransfer->requireFkLocale();
+        $urlTransfer->requireFkStore();
+        $urlEntity = $this->urlQueryContainer->queryUrl($urlTransfer->getUrl())
+            ->filterByFkStore($urlTransfer->getFkStore())
+            ->filterByFkLocale($urlTransfer->getFkLocale())
+            ->findOneOrCreate();
 
         $id = $urlEntity->getIdUrl();
         $urlEntity->fromArray($urlTransfer->modifiedToArray());
