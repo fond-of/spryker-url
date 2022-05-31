@@ -2,8 +2,8 @@
 
 namespace FondOfSpryker\Zed\Url\Business\Url;
 
+use FondOfSpryker\Zed\Url\Dependency\Facade\UrlToStoreFacadeInterface;
 use Generated\Shared\Transfer\UrlTransfer;
-use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use Spryker\Zed\Url\Business\Url\UrlReader as SprykerUrlReader;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 use Spryker\Zed\Url\Persistence\UrlRepositoryInterface;
@@ -16,16 +16,16 @@ class UrlReader extends SprykerUrlReader implements UrlReaderInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
+     * @var \FondOfSpryker\Zed\Url\Dependency\Facade\UrlToStoreFacadeInterface
      */
     protected $storeFacade;
 
     /**
      * @param \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Url\Persistence\UrlRepositoryInterface $urlRepository
-     * @param \Spryker\Zed\Store\Business\StoreFacadeInterface $storeFacade
+     * @param \FondOfSpryker\Zed\Url\Dependency\Facade\UrlToStoreFacadeInterface $storeFacade
      */
-    public function __construct(UrlQueryContainerInterface $queryContainer, UrlRepositoryInterface $urlRepository, StoreFacadeInterface $storeFacade)
+    public function __construct(UrlQueryContainerInterface $queryContainer, UrlRepositoryInterface $urlRepository, UrlToStoreFacadeInterface $storeFacade)
     {
         parent::__construct($queryContainer, $urlRepository);
         $this->storeFacade = $storeFacade;
@@ -44,6 +44,6 @@ class UrlReader extends SprykerUrlReader implements UrlReaderInterface
             $fkStore = $this->storeFacade->getCurrentStore()->getIdStore();
         }
 
-        return parent::queryUrlEntity($urlTransfer, $ignoreUrlRedirects)->filterByFkStore($fkStore)->filterByUrl($urlTransfer->getUrl());
+        return parent::queryUrlEntity($urlTransfer, $ignoreUrlRedirects)->filterByFkStore($fkStore);
     }
 }

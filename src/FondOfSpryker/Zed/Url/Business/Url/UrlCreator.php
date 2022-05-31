@@ -2,8 +2,8 @@
 
 namespace FondOfSpryker\Zed\Url\Business\Url;
 
-use Spryker\Zed\Url\Business\Url\UrlCreator as SprykerUrlCreator;
 use Generated\Shared\Transfer\UrlTransfer;
+use Spryker\Zed\Url\Business\Url\UrlCreator as SprykerUrlCreator;
 
 class UrlCreator extends SprykerUrlCreator implements UrlCreatorInterface
 {
@@ -14,9 +14,11 @@ class UrlCreator extends SprykerUrlCreator implements UrlCreatorInterface
      */
     protected function persistUrlEntity(UrlTransfer $urlTransfer)
     {
-        $urlTransfer->requireUrl();
-        $urlTransfer->requireFkLocale();
-        $urlTransfer->requireFkStore();
+        $urlTransfer
+            ->requireUrl()
+            ->requireFkLocale()
+            ->requireFkStore();
+
         $urlEntity = $this->urlQueryContainer->queryUrl($urlTransfer->getUrl())
             ->filterByFkStore($urlTransfer->getFkStore())
             ->filterByFkLocale($urlTransfer->getFkLocale())
@@ -27,8 +29,6 @@ class UrlCreator extends SprykerUrlCreator implements UrlCreatorInterface
         $urlEntity->setIdUrl($id);
         $urlEntity->save();
 
-        $urlTransfer->fromArray($urlEntity->toArray(), true);
-
-        return $urlTransfer;
+        return $urlTransfer->fromArray($urlEntity->toArray(), true);
     }
 }

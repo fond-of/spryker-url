@@ -5,35 +5,13 @@ namespace FondOfSpryker\Zed\Url\Persistence;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\Store\Business\StoreFacadeInterface;
-use Spryker\Zed\Url\Persistence\UrlRepositoryInterface;
+use Spryker\Zed\Url\Persistence\UrlRepository as SprykerUrlRepository;
 
-class UrlRepositoryStore extends AbstractRepository implements UrlRepositoryInterface
+/**
+ * @method \Spryker\Zed\Url\Persistence\UrlPersistenceFactory getFactory()
+ */
+class UrlRepository extends SprykerUrlRepository implements UrlRepositoryInterface
 {
-    /**
-     * @var \Spryker\Zed\Url\Persistence\UrlRepositoryInterface
-     */
-    private $repository;
-
-    /**
-     * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
-     */
-    private $storeFacade;
-
-    /**
-     * @param \Spryker\Zed\Url\Persistence\UrlRepositoryInterface $repository
-     * @param \Spryker\Zed\Store\Business\StoreFacadeInterface $storeFacade
-     */
-    public function __construct(
-        UrlRepositoryInterface $repository,
-        StoreFacadeInterface $storeFacade
-    )
-    {
-        $this->repository = $repository;
-        $this->storeFacade = $storeFacade;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
@@ -79,7 +57,11 @@ class UrlRepositoryStore extends AbstractRepository implements UrlRepositoryInte
             ->setIgnoreCase(true);
 
         if ($urlTransfer->getUrl() !== null) {
-            $fkStore = $this->storeFacade->getCurrentStore()->getIdStore();
+            //phpcs wont let me override it on class @method
+            /** @var \FondOfSpryker\Zed\Url\Persistence\UrlPersistenceFactory $factory */
+            $factory = $this->getFactory();
+            $fkStore = $factory->getStoreFacade()->getCurrentStore()->getIdStore();
+
             return $urlQuery->filterByUrl($urlTransfer->getUrl())->filterByFkStore($fkStore);
         }
 

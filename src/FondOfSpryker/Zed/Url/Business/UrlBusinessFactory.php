@@ -2,18 +2,18 @@
 
 namespace FondOfSpryker\Zed\Url\Business;
 
-use FondOfSpryker\Zed\Url\Persistence\UrlRepositoryStore;
 use FondOfSpryker\Zed\Url\Business\Redirect\Observer\UrlUpdateObserver;
 use FondOfSpryker\Zed\Url\Business\Url\UrlCreator;
 use FondOfSpryker\Zed\Url\Business\Url\UrlReader;
 use FondOfSpryker\Zed\Url\Business\Url\UrlReaderInterface;
+use FondOfSpryker\Zed\Url\Dependency\Facade\UrlToStoreFacadeInterface;
 use FondOfSpryker\Zed\Url\UrlDependencyProvider;
-use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use Spryker\Zed\Url\Business\UrlBusinessFactory as SprykerUrlBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Url\UrlConfig getConfig()
+ * @method \Spryker\Zed\Url\Persistence\UrlRepositoryInterface getRepository()
  */
 class UrlBusinessFactory extends SprykerUrlBusinessFactory
 {
@@ -30,15 +30,10 @@ class UrlBusinessFactory extends SprykerUrlBusinessFactory
      */
     public function createUrlReader(): UrlReaderInterface
     {
-        $repositoryStore = new UrlRepositoryStore(
-            $this->getRepository(),
-            $this->getStoreFacade()
-        );
-
         return new UrlReader(
             $this->getQueryContainer(),
-            $repositoryStore,
-            $this->getStoreFacade()
+            $this->getRepository(),
+            $this->getStoreFacade(),
         );
     }
 
@@ -55,9 +50,9 @@ class UrlBusinessFactory extends SprykerUrlBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Store\Business\StoreFacadeInterface
+     * @return \FondOfSpryker\Zed\Url\Dependency\Facade\UrlToStoreFacadeInterface
      */
-    protected function getStoreFacade(): StoreFacadeInterface
+    protected function getStoreFacade(): UrlToStoreFacadeInterface
     {
         return $this->getProvidedDependency(UrlDependencyProvider::FACADE_STORE);
     }

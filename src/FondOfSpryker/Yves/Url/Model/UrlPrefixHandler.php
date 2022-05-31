@@ -5,6 +5,8 @@ namespace FondOfSpryker\Yves\Url\Model;
 class UrlPrefixHandler implements UrlPrefixHandlerInterface
 {
     /**
+     * @param string $locale
+     *
      * @return string
      */
     public function getUrlPathPrefix(string $locale): string
